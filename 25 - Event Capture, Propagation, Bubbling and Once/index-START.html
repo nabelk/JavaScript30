@@ -40,9 +40,27 @@
   }
 </style>
 
-<button></button>
+<button>Come on, smash me!</button>
 <script>
+  const divs = document.querySelectorAll("div");
+  const button = document.querySelector("button");
+  
+  function logtext(e){
+    console.log(this.classList.value);
+    e.stopPropagation(); // stop bubbling, only trigger THE div that we click
+  }
 
+  divs.forEach(div => div.addEventListener("click", logtext, {
+    /* capture: true, // eg when click div .three, it will run from top which is div .one */
+    once: true // only can be click once
+  }));
+
+  button.addEventListener("click", () => {
+    console.log("Hoyeeahhh!")
+  }, {
+    once: true
+  })
+  
 </script>
 </body>
 </html>
