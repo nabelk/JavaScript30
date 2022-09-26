@@ -50,51 +50,92 @@
       }
     });
 
-    // bornIn15[0].first = "Nabil";
+    /* bornIn15[0].first = "Nabil"; */
 
     console.log(bornIn15);
-
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
-    // let firstlastArray = () => { 
-    //     let result = inventors.map(inventor =>{
-    //     delete inventor.year;
-    //     delete inventor.passed; 
-    //     return inventor;
-    //   })
-    //   return result;
-    // };
+    let firstlastArray = inventors.map(inventor => {
+      return `${inventor.first} ${inventor.last}`; 
+    })
 
-    // console.log(firstlastArray());
+    console.table(firstlastArray);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
-     let sortByYear = () =>{
-      inventors.sort((a,b) => a.year - b.year);
-      inventors.reverse();
-      return inventors;
-     }
+     let sortByYear = inventors.sort((a, b) => {
+      if(a.year > b.year){
+        return 1;
+      } else {
+        return -1;
+      }
+     })
 
-    console.log(sortByYear());
+    console.table(sortByYear);
     
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+     const totalYearsLive = inventors.reduce((initial, inventor) => {
+      return initial + (inventor.passed - inventor.year);
+     }, 0);
+
+     console.log(totalYearsLive);
+
     // 5. Sort the inventors by years lived
+
+    const inventorsYearsLived = inventors.sort((a, b) => {
+      const lastPerson = a.passed - a.year; // a is second index of two
+      const firstPerson = b.passed - b.year; // b is first index of two
+      // To compare between a and b of all index by two index
+      if(lastPerson > firstPerson){
+        console.log (`lastperson: ${a.first} live longer than first: ${b.first}`);
+        return -1; // bring person between (lastperson and first person) who live longer to top
+      } else {
+        return 1; // stay at the initial index
+      }
+    })
+     console.log(inventorsYearsLived)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // const findList = document.querySelector(".mw-category.mw-category-columns");
+    // const links = [...findList.querySelectorAll("a")];
+    // let gotDe = links.map(item => {
+    //     return item.textContent;
+    //   }) 
+    // gotDe = gotDe.filter(text => text.includes("de"));
+    // console.log(gotDe)
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    const familyName = people.sort((a, b) => {
+      const [alast, afirst] = a.split(", ");
+      const [blast, bfirst] = b.split(", ");
+
+      return alast > blast ? 1 : -1; 
+    })
+
+    console.log(familyName)
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const sumData = data.reduce ((obj, transportation) => {
+      if (!obj[transportation]){
+        obj[transportation] = 0;
+      }
+      obj[transportation]++;
+      return obj;
+    }, {});
+
+    console.log(sumData)
 
   </script>
 </body>
